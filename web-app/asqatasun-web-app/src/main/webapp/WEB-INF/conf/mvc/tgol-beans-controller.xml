@@ -376,6 +376,7 @@
                         <ref bean="nbMaxUploadAuditsPerContractOptionBuilder"/>
                         <ref bean="nbMaxScenarioAuditsPerContractOptionBuilder"/>
                         <ref bean="nbMaxActsToDisplayPerContractOptionBuilder"/>
+                        <ref bean="nbMaxPagesPerAuditOptionBuilder" />
                     </list>
                 </entry>
                 <entry key="crawl-options">
@@ -411,6 +412,7 @@
                         <ref bean="nbMaxUploadAuditsPerContractOptionBuilder"/>
                         <ref bean="nbMaxScenarioAuditsPerContractOptionBuilder"/>
                         <ref bean="nbMaxActsToDisplayPerContractOptionBuilder"/>
+                        <ref bean="nbMaxPagesPerAuditOptionBuilder" />
                     </list>
                 </entry>
                 <entry key="crawl-options">
