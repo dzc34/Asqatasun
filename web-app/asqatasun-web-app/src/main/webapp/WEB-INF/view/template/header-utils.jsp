@@ -25,6 +25,7 @@
 <c:if test="${adminActive == 'true'}">
     <c:set var="adminActive" scope="page" value=""/>
 </c:if>
+<%@include file="template/demo-header.jsp" %>
 <div class="topbar">
     <div class="fill">
         <div class="container">
