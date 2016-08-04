@@ -1,0 +1,93 @@
+FROM ubuntu:14.04
+MAINTAINER Matthieu Faure <mfaure@asqatasun.org>
+
+# ##########################################################
+#
+#                      DISCLAIMER
+#
+# This is a fat container, that is absolutly not compliant to Docker best-practices
+# https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/
+# Don't use it for production as all data are wiped out at reboot / rebuild
+# BUT for quick testing, that does the job :)
+#
+# ##########################################################
+
+USER root
+
+ENV WWWPORT="8080" \
+    JENKINS_PORT="8089" \
+    DATABASE_DB="asqatasun" \
+    DATABASE_HOST="localhost" \
+    DATABASE_USER="asqatasun" \
+    DATABASE_PASSWD="asqaP4sswd" \
+    TOMCAT_WEBAPP_DIR="/var/lib/tomcat7/webapps" \
+    TOMCAT_USER="tomcat7" \
+    ASQA_URL="http://localhost:8080/asqatasun/" \
+    ASQA_ADMIN_EMAIL="me@my-email.org" \
+    ASQA_ADMIN_PASSWD="myAsqaPassword"  \
+    ASQA_RELEASE="4.1.0-SNAPSHOT"
+
+EXPOSE $WWWPORT
+EXPOSE $JENKINS_PORT
+
+WORKDIR /root
+
+# ##########################################################
+#
+# Asqatasun installation
+# cf http://doc.asqatasun.org/en/10_Install_doc/
+#
+# ##########################################################
+
+# Add Asqatasun
+ADD ./asqatasun-${ASQA_RELEASE}.i386.tar.gz /root/
+ADD ./asqatasun-runner-${ASQA_RELEASE}.i386.tar.gz /root/
+ADD ./jenkins-asqatasun-runner-plugin-1.3.hpi /root/
+
+# Install Asqatasun
+RUN apt-get update && \
+    apt-get -y --no-install-recommends install \
+                                       wget \
+                                       ca-certificates && \
+wget -q -O - https://jenkins-ci.org/debian/jenkins-ci.org.key | sudo apt-key add -   && \
+sh -c 'echo deb http://pkg.jenkins-ci.org/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'  && \     
+apt-get update && \
+apt-get -y --no-install-recommends install jenkins && \       
+sed -i -e "s/HTTP_PORT=8080/HTTP_PORT=8089/g" /etc/default/jenkins &&\    
+service jenkins start  && \    
+    cd /root/ && \   
+mv asqatasun-runner-4.1.0-SNAPSHOT.i386/ ./asqa_runner/ && \
+sed -i -e "s/\$DbName/${DATABASE_DB}/g"                                         ./asqa_runner/conf/context/asqatasun.conf &&\  
+sed -i -e "s/\$DbUrl/${DATABASE_HOST}/g"                                        ./asqa_runner/conf/context/asqatasun.conf &&\ 
+sed -i -e "s/jdbc.username=\*\*\*\*\*\*\*\*/jdbc.username=${DATABASE_USER}/g"   ./asqa_runner/conf/context/asqatasun.conf &&\  
+sed -i -e "s/jdbc.password=\*\*\*\*\*\*\*\*/jdbc.password=${DATABASE_PASSWD}/g" ./asqa_runner/conf/context/asqatasun.conf &&\  
+cp -rv /root/asqa_runner /opt/  &&\  
+chmod 777 /opt/asqa_runner &&\  
+    mv asqatasun-${ASQA_RELEASE}.i386/ ./asqatasun/ && \
+    cp ./asqatasun/install/xvfb . && \
+    ./asqatasun/install/pre-requisites.sh && \
+    cp -v jenkins-asqatasun-runner-plugin-1.3.hpi /var/lib/jenkins/plugins/  &&\
+    service mysql start && \
+    sleep 5 && \
+    cd /root/asqatasun/ && \
+    echo "yes\n" | ./install.sh  \
+        --database-db $DATABASE_DB \
+        --database-host $DATABASE_HOST \
+        --database-user $DATABASE_USER \
+        --database-passwd $DATABASE_PASSWD \
+        --asqatasun-url $ASQA_URL \
+        --tomcat-webapps $TOMCAT_WEBAPP_DIR \
+        --tomcat-user $TOMCAT_USER \
+        --asqa-admin-email $ASQA_ADMIN_EMAIL \
+        --asqa-admin-passwd $ASQA_ADMIN_PASSWD \
+        --firefox-esr-binary-path /opt/firefox/firefox \
+        --display-port :99 && \
+    rm -rvf  /root/asqatasun*
+
+CMD service mysql start && \
+    sleep 5 && \
+    service jenkins start  && \
+    service xvfb start && \
+    service tomcat7 start ; \
+    tail -f /var/log/tomcat7/catalina.out \
+         /var/log/asqatasun/asqatasun.log
