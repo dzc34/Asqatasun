@@ -51,7 +51,7 @@ public class Rgaa32016Rule081002Test extends Rgaa32016RuleImplementationTestCase
     @Override
     protected void setUpWebResourceMap() {
 //        addWebResource("Rgaa32016.Test.8.10.2-1Passed-01");
-//        addWebResource("Rgaa32016.Test.8.10.2-2Failed-01");
+        addWebResource("Rgaa32016.Test.8.10.2-2Failed-01");
         addWebResource("Rgaa32016.Test.8.10.2-3NMI-01");
         addWebResource("Rgaa32016.Test.8.10.2-4NA-01");
     }
@@ -66,8 +66,8 @@ public class Rgaa32016Rule081002Test extends Rgaa32016RuleImplementationTestCase
         //----------------------------------------------------------------------
         //------------------------------2Failed-01------------------------------
         //----------------------------------------------------------------------
-//        ProcessResult processResult = processPageTest("Rgaa32016.Test.8.10.2-2Failed-01");
-//        checkResultIsFailed(processResult, 1, 1);
+        ProcessResult processResult = processPageTest("Rgaa32016.Test.8.10.2-2Failed-01");
+        checkResultIsFailed(processResult, 3, 2);
 //        checkRemarkIsPresent(
 //                processResult,
 //                TestSolution.FAILED,

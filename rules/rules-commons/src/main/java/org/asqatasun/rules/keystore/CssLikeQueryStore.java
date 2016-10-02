@@ -263,7 +263,10 @@ public final class CssLikeQueryStore {
 
     // Dir css-like queries
     public static final String ELEMENT_WITH_DIR_ATTR_CSS_LIKE_QUERY =
-            "html [dir]";
+                    "html [dir]";
+    public static final String ELEMENT_WITH_VALID_DIR_ATTR_CSS_LIKE_QUERY =
+                      "html [dir=ltr] , "
+                    + "html [dir=rtl]   " ;
 
     // Lang css-like queries
     public static final String ELEMENT_WITH_LANG_ATTR_CSS_LIKE_QUERY = 

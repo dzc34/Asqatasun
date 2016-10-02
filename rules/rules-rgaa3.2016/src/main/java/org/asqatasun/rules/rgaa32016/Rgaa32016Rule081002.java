@@ -23,6 +23,7 @@ import org.asqatasun.entity.audit.TestSolution;
 import org.asqatasun.ruleimplementation.AbstractDetectionPageRuleImplementation;
 import org.asqatasun.rules.elementselector.SimpleElementSelector;
 import static org.asqatasun.rules.keystore.CssLikeQueryStore.ELEMENT_WITH_DIR_ATTR_CSS_LIKE_QUERY;
+import static org.asqatasun.rules.keystore.CssLikeQueryStore.ELEMENT_WITH_VALID_DIR_ATTR_CSS_LIKE_QUERY ;
 import static org.asqatasun.rules.keystore.RemarkMessageStore.MANUAL_CHECK_ON_ELEMENTS_MSG;
 
 /**
