@@ -525,10 +525,10 @@ main() {
     edit_esapi_configuration_file
     echo "Asqatasun webapp configuration:       OK"
     # create first user
-    create_first_user
-    echo "Asqatasun admin creation:             OK"
-    create_first_contracts
-    echo "Asqatasun contract creation:          OK"
+        # create_first_user
+        # echo "Asqatasun admin creation:             OK"
+        # create_first_contracts
+        # echo "Asqatasun contract creation:          OK"
     # update tomcat configuration
     update_tomcat_configuration
     echo "Tomcat configuration:                 OK"

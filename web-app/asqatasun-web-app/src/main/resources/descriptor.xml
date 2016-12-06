@@ -88,6 +88,7 @@
             <directory>${basedir}/../tgol-resources/src/main/resources/installation</directory>
             <includes>
                 <include>install.sh</include>
+                <include>install_SQL-create-first-user.sh</include>
                 <include>install-SQL.sh</include>
                 <include>uninstall.sh</include>
                 <include>pre-requisites.sh</include>

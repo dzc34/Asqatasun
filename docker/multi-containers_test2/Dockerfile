@@ -1,4 +1,4 @@
-FROM asqatasun/asqatasun:pre-requisites_with-empty-DB
+FROM asqatasun/asqatasun:pre-requisites_without-DB
 MAINTAINER Matthieu Faure <mfaure@asqatasun.org>
 
 # ##########################################################
@@ -10,18 +10,12 @@ MAINTAINER Matthieu Faure <mfaure@asqatasun.org>
 # Don't use it for production as all data are wiped out at reboot / rebuild
 # BUT for quick testing, that does the job :)
 #
-# #### FROM  ######################################################
-#   Ubuntu:14.04
-#   |-- asqatasun/asqatasun:base_wget
-#       |-- asqatasun/asqatasun:only-DB
-#           |-- asqatasun/asqatasun:pre-requisites_without-DB
-#               |-- asqatasun/asqatasun:pre-requisites_with-empty-DB  
-###################################################################
+# ##########################################################
 
 USER root
 ENV  WWWPORT="8080"                                    \
      DATABASE_DB="asqatasun"                           \
-     DATABASE_HOST="localhost"                         \
+     DATABASE_HOST="asqatasun_db"                      \
      DATABASE_USER="asqatasun"                         \
      DATABASE_PASSWD="asqaP4sswd"                      \
      TOMCAT_WEBAPP_DIR="/var/lib/tomcat7/webapps"      \
@@ -41,15 +35,15 @@ EXPOSE $WWWPORT
 #
 # ##########################################################
 
-
 # Add Asqatasun
 ADD ./asqatasun-${ASQA_RELEASE}.i386.tar.gz /root/
 
 # Install Asqatasun
 RUN  cd  /root                                      && \
-     mv   asqatasun*/    ./asqatasun/               && \
-     service mysql start                            && \
-     sleep 5                                        && \
+     apt-get update                                 && \
+     apt-get -y --no-install-recommends      \
+                install mysql-client                && \
+     mv   asqatasun*/               ./asqatasun/    && \
      cd   /root/asqatasun/install/                  && \
      echo "yes\n" | ./install.sh               \
         --database-db       $DATABASE_DB       \
@@ -63,27 +57,12 @@ RUN  cd  /root                                      && \
         --asqa-admin-passwd $ASQA_ADMIN_PASSWD \
         --firefox-esr-binary-path /opt/firefox/firefox \
         --display-port      :99                     && \
-     echo "yes\n" | ./install-SQL.sh           \
-        --database-db       $DATABASE_DB       \
-        --database-host     $DATABASE_HOST     \
-        --database-user     $DATABASE_USER     \
-        --database-passwd   $DATABASE_PASSWD        && \
-     echo "yes\n" | ./install_SQL-create-first-user.sh  \
-        --database-db       $DATABASE_DB       \
-        --database-host     $DATABASE_HOST     \
-        --database-user     $DATABASE_USER     \
-        --database-passwd   $DATABASE_PASSWD   \
-        --asqa-admin-email  $ASQA_ADMIN_EMAIL  \
-        --asqa-admin-passwd $ASQA_ADMIN_PASSWD 
+     rm -rf  /root/asqatasun*                       && \
+     apt-get clean                                  && \
+     apt-get autoremove                             && \
+     rm -rf  /var/lib/apt/lists/*
 
-     # && \
-     # rm -rf  /root/asqatasun*
-
-CMD  service mysql start                            && \
-     sleep   5                                      && \
-     service xvfb start                             && \
+CMD  service xvfb start                             && \
      service tomcat7 start                          ;  \
      tail -f /var/log/tomcat7/catalina.out     \
              /var/log/asqatasun/asqatasun.log
-
-

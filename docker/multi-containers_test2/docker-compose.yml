@@ -1,0 +1,9 @@
+asqatasun_db:
+    image: asqatasun/asqatasun:only-DB
+asqatasun:
+    build: .
+    links :
+    - asqatasun_db
+    ports:
+    - "8084:8080"
+
