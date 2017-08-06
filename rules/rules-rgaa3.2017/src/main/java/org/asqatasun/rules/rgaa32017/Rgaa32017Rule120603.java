@@ -17,24 +17,26 @@
  *
  * Contact us by mail: asqatasun AT asqatasun DOT org
  */
+
 package org.asqatasun.rules.rgaa32017;
 
-import org.asqatasun.ruleimplementation.AbstractNotTestedRuleImplementation;
+import org.asqatasun.ruleimplementation.AbstractNotTestedSiteRuleImplementation;
 
 /**
  * Implementation of the rule 12.6.3 of the referential RGAA 3.2017
- *
+ * <br/>
  * For more details about the implementation, refer to <a href="https://doc.asqatasun.org/en/90_Rules/rgaa3.2017/12.Navigation/Rule-12-6-3.html">the rule 12.6.3 design page.</a>
  * @see <a href="http://references.modernisation.gouv.fr/rgaa-accessibilite/criteres.html#test-12-6-3">12.6.3 rule specification</a>
  *
- * @author
+ * @author jkowalczyk
  */
-public class Rgaa32017Rule120603 extends AbstractNotTestedRuleImplementation {
+
+public class Rgaa32017Rule120603 extends AbstractNotTestedSiteRuleImplementation {
 
     /**
      * Default constructor
      */
-    public Rgaa32017Rule120603 () {
+    public Rgaa32017Rule120603   () {
         super();
     }
 

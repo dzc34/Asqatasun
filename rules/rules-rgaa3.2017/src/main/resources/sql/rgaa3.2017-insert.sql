@@ -661,3 +661,49 @@ INSERT IGNORE INTO `PARAMETER` (`Id_Parameter_Element`, `Parameter_Value`, `Is_D
 (5, 'Rgaa32017;LEVEL_2', b'0'),
 (5, 'Rgaa32017;LEVEL_3', b'0');
 
+UPDATE TEST SET `No_Process`=b'0' WHERE Cd_Test='rgaa32017-1-1-1';
+
+UPDATE TEST SET `No_Process`=b'0' WHERE Cd_Test='rgaa32017-2-1-1';
+
+UPDATE TEST SET `No_Process`=b'0' WHERE Cd_Test='rgaa32017-2-2-1';
+
+UPDATE TEST SET `No_Process`=b'0' WHERE Cd_Test='rgaa32017-5-1-1';
+
+UPDATE TEST SET `No_Process`=b'0' WHERE Cd_Test='rgaa32017-5-2-1';
+
+UPDATE TEST SET `No_Process`=b'0' WHERE Cd_Test='rgaa32017-5-4-1';
+
+UPDATE TEST SET `No_Process`=b'0' WHERE Cd_Test='rgaa32017-5-6-1';
+
+UPDATE TEST SET `No_Process`=b'0' WHERE Cd_Test='rgaa32017-5-6-2';
+
+UPDATE TEST SET `No_Process`=b'0' WHERE Cd_Test='rgaa32017-6-2-1';
+
+UPDATE TEST SET `No_Process`=b'0' WHERE Cd_Test='rgaa32017-6-2-2';
+
+UPDATE TEST SET `No_Process`=b'0' WHERE Cd_Test='rgaa32017-11-2-1';
+
+UPDATE TEST SET `No_Process`=b'0' WHERE Cd_Test='rgaa32017-11-2-2';
+
+UPDATE TEST SET `No_Process`=b'0' WHERE Cd_Test='rgaa32017-11-3-1';
+
+UPDATE TEST SET `No_Process`=b'0' WHERE Cd_Test='rgaa32017-11-3-2';
+
+UPDATE TEST SET `No_Process`=b'0' WHERE Cd_Test='rgaa32017-11-4-1';
+
+UPDATE TEST SET `No_Process`=b'0' WHERE Cd_Test='rgaa32017-11-8-1';
+
+UPDATE TEST SET `No_Process`=b'0' WHERE Cd_Test='rgaa32017-11-11-1';
+
+UPDATE TEST SET `No_Process`=b'0' WHERE Cd_Test='rgaa32017-11-11-2';
+
+UPDATE TEST SET `No_Process`=b'0' WHERE Cd_Test='rgaa32017-11-15-1';
+
+UPDATE TEST SET `No_Process`=b'0' WHERE Cd_Test='rgaa32017-12-3-1';
+
+UPDATE TEST SET `No_Process`=b'0' WHERE Cd_Test='rgaa32017-12-3-2';
+
+UPDATE TEST SET `No_Process`=b'0' WHERE Cd_Test='rgaa32017-12-6-2';
+
+UPDATE TEST SET `No_Process`=b'0' WHERE Cd_Test='rgaa32017-12-6-3';
+

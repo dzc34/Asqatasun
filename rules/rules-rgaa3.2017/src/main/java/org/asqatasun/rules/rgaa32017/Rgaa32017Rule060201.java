@@ -19,23 +19,28 @@
  */
 package org.asqatasun.rules.rgaa32017;
 
-import org.asqatasun.ruleimplementation.AbstractNotTestedRuleImplementation;
+import org.asqatasun.ruleimplementation.AbstractPageRuleWithSelectorAndCheckerImplementation;
+import org.asqatasun.rules.elementchecker.link.LinkTitlePertinenceChecker;
+import org.asqatasun.rules.elementselector.LinkElementSelector;
 
 /**
- * Implementation of the rule 6.2.1 of the referential RGAA 3.2017
+ * Implementation of the rule 6.2.1 of the referential RGAA 3.2017 <br/> For
+ * more details about the implementation, refer to <a
+ * href="https://doc.asqatasun.org/en/90_Rules/rgaa3.2017/06.Links/Rule-6-2-1.html">the rule 6.2.1
+ * design page.</a>
  *
- * For more details about the implementation, refer to <a href="https://doc.asqatasun.org/en/90_Rules/rgaa3.2017/06.Links/Rule-6-2-1.html">the rule 6.2.1 design page.</a>
- * @see <a href="http://references.modernisation.gouv.fr/rgaa-accessibilite/criteres.html#test-6-2-1">6.2.1 rule specification</a>
+ * @see <a
+ * href="http://references.modernisation.gouv.fr/rgaa-accessibilite/criteres.html#test-6-2-1">
+ * 6.2.1 rule specification</a>
  *
- * @author
  */
-public class Rgaa32017Rule060201 extends AbstractNotTestedRuleImplementation {
+public class Rgaa32017Rule060201 extends AbstractPageRuleWithSelectorAndCheckerImplementation {
 
     /**
-     * Default constructor
+     * 
      */
-    public Rgaa32017Rule060201 () {
-        super();
+    public Rgaa32017Rule060201  () {
+        super(new LinkElementSelector(false), new LinkTitlePertinenceChecker());
     }
 
 }

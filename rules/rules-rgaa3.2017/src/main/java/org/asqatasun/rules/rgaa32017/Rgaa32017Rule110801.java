@@ -17,25 +17,36 @@
  *
  * Contact us by mail: asqatasun AT asqatasun DOT org
  */
+
 package org.asqatasun.rules.rgaa32017;
 
-import org.asqatasun.ruleimplementation.AbstractNotTestedRuleImplementation;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.asqatasun.entity.audit.TestSolution;
+import org.asqatasun.ruleimplementation.AbstractDetectionPageRuleImplementation;
+import org.asqatasun.rules.elementselector.SimpleElementSelector;
+import static org.asqatasun.rules.keystore.CssLikeQueryStore.SELECT_WITHIN_FORM_CSS_LIKE_QUERY;
+import static org.asqatasun.rules.keystore.RemarkMessageStore.MANUAL_CHECK_ON_ELEMENTS_MSG;
 
 /**
  * Implementation of the rule 11.8.1 of the referential RGAA 3.2017
- *
+ * <br/>
  * For more details about the implementation, refer to <a href="https://doc.asqatasun.org/en/90_Rules/rgaa3.2017/11.Forms/Rule-11-8-1.html">the rule 11.8.1 design page.</a>
  * @see <a href="http://references.modernisation.gouv.fr/rgaa-accessibilite/criteres.html#test-11-8-1">11.8.1 rule specification</a>
  *
- * @author
  */
-public class Rgaa32017Rule110801 extends AbstractNotTestedRuleImplementation {
-
+public class Rgaa32017Rule110801 extends AbstractDetectionPageRuleImplementation {
+    
     /**
      * Default constructor
      */
-    public Rgaa32017Rule110801 () {
-        super();
+    public Rgaa32017Rule110801   () {
+        super(
+                new SimpleElementSelector(SELECT_WITHIN_FORM_CSS_LIKE_QUERY),
+                // solution when at least one element is found
+                new ImmutablePair(TestSolution.NEED_MORE_INFO,MANUAL_CHECK_ON_ELEMENTS_MSG),
+                // solution when no element is found
+                new ImmutablePair(TestSolution.NOT_APPLICABLE,"")
+            );
     }
 
 }

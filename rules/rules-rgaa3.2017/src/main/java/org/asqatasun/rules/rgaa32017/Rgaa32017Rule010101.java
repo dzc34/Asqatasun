@@ -19,23 +19,41 @@
  */
 package org.asqatasun.rules.rgaa32017;
 
-import org.asqatasun.ruleimplementation.AbstractNotTestedRuleImplementation;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.asqatasun.entity.audit.TestSolution;
+import org.asqatasun.ruleimplementation.AbstractPageRuleWithSelectorAndCheckerImplementation;
+import org.asqatasun.rules.elementchecker.attribute.AttributePresenceChecker;
+import org.asqatasun.rules.elementselector.SimpleElementSelector;
+import static org.asqatasun.rules.keystore.AttributeStore.ALT_ATTR;
+import static org.asqatasun.rules.keystore.AttributeStore.SRC_ATTR;
+import static org.asqatasun.rules.keystore.HtmlElementStore.IMG_ELEMENT;
+import static org.asqatasun.rules.keystore.RemarkMessageStore.ALT_MISSING_MSG;
 
 /**
  * Implementation of the rule 1.1.1 of the referential RGAA 3.2017
- *
+ * <br/>
  * For more details about the implementation, refer to <a href="https://doc.asqatasun.org/en/90_Rules/rgaa3.2017/01.Images/Rule-1-1-1.html">the rule 1.1.1 design page.</a>
  * @see <a href="http://references.modernisation.gouv.fr/rgaa-accessibilite/criteres.html#test-1-1-1">1.1.1 rule specification</a>
  *
- * @author
  */
-public class Rgaa32017Rule010101 extends AbstractNotTestedRuleImplementation {
+public class Rgaa32017Rule010101 extends AbstractPageRuleWithSelectorAndCheckerImplementation {
 
     /**
      * Default constructor
      */
-    public Rgaa32017Rule010101 () {
-        super();
+    public Rgaa32017Rule010101  () {
+        super(
+                
+                new SimpleElementSelector(IMG_ELEMENT), 
+                new AttributePresenceChecker(
+                        ALT_ATTR, 
+                        // passed when attribute is found, empty message
+                        new ImmutablePair(TestSolution.PASSED, ""),
+                        // failed when attribute is not found, altMissing message
+                        new ImmutablePair(TestSolution.FAILED, ALT_MISSING_MSG),
+                        // evidence elements
+                        SRC_ATTR)
+            );
     }
 
 }
