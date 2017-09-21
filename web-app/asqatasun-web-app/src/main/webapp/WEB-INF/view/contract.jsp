@@ -257,6 +257,7 @@
                                         </td>
                                         <td headers="referential" class="tg-textual-column">
                                             <fmt:message key="${actInfo.referential}"/>
+                                            <fmt:message key="${actInfo.level}"/>
                                         </td>
                                         <td headers="scope" class="tg-textual-column">
                                             <fmt:message key="${actInfo.scope}"/>

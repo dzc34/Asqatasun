@@ -51,7 +51,66 @@
                     <form:hidden path="scenarioName"/>
                 </c:if>
             </div>
-        <c:choose>
+            <fieldset>
+            <legend>
+                <fmt:message key="level-parameters"/>
+            </legend>
+            <c:set var="fieldsetInfo" scope="page">
+                <fmt:message key="level-parameters-info"/>
+            </c:set>
+            <c:if test="${fieldsetInfo != ''}">
+                <div class="alert-message block-message warning">
+                    <p class="fieldset-info">${fieldsetInfo}</p>
+                </div>
+            </c:if>
+            <c:forEach var="level" items="${levelList}" >
+                <c:set var="i18nKey" scope="page" value="${level.i18nKey}"/>
+                <c:set var="code" scope="page" value="LEVEL"/>
+                <div class="clearfix">
+                    <label id="set-up-${i18nKey}"
+                           for="${i18nKey}">
+                        <fmt:message key="${i18nKey}"/>
+                    </label>
+                    <div class="set-up-value input">
+                        <form:select id="${i18nKey}"
+                                     path="level"
+                                     cssErrorClass="xlarge error"
+                                     cssClass="xlarge">
+                            <c:forEach items="${level.selectElementMap}"
+                                       var="group">
+                                <c:if test="${group.value[0].enabled}">
+                                    <optgroup label="<fmt:message key="${group.key}-optgroup"/>">
+                                        <c:forEach items="${group.value}"
+                                                   var="level">
+                                            <c:choose>
+                                                <c:when test="${level.defaultElement == 'true'}">
+                                                    <c:set var="selected"
+                                                           scope="page"
+                                                           value="selected=\"selected\""/>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <c:set var="selected"
+                                                           scope="page"
+                                                           value=""/>
+                                                </c:otherwise>
+                                            </c:choose>
+                                            <option value="${level.value}" ${selected}>
+                                                <fmt:message key="${level.i18nKey}"/>
+                                                (<fmt:message key="${group.key}-optgroup"/>)
+                                            </option>
+                                        </c:forEach><!-- for each element of a referentiel -->
+                                    </optgroup>
+                                </c:if>
+                            </c:forEach>
+                        </form:select>
+                        <form:errors path="level" cssClass="alert-message error" /><br/>
+                    </div>
+                </div>
+                </fieldset>
+            </c:forEach>
+
+
+            <c:choose>
             <c:when test="${action == 'page' && fn:length(auditSetUpCommand.urlList) == 1}">
                 <label id="label-url" for="urlList0">
                     <span class="mandatory">* </span>
@@ -215,69 +274,13 @@
             <spring:hasBindErrors name="auditSetUpCommand">
                 <c:set var="onError" scope="page" value="on-error"/>
             </spring:hasBindErrors>
+
             <h2>
                 <span class="master-audit-options ${onError}">
                     <fmt:message key="auditSetUp.formTitle"/>
                 </span>
             </h2>
             <div id="audit-options">
-                <fieldset>
-                    <legend>
-                        <fmt:message key="level-parameters"/>
-                    </legend>
-                <c:set var="fieldsetInfo" scope="page">
-                    <fmt:message key="level-parameters-info"/>
-                </c:set>
-                <c:if test="${fieldsetInfo != ''}">
-                    <div class="alert-message block-message warning">
-                        <p class="fieldset-info">${fieldsetInfo}</p>
-                    </div>
-                </c:if>
-                <c:forEach var="level" items="${levelList}" >
-                    <c:set var="i18nKey" scope="page" value="${level.i18nKey}"/>
-                    <c:set var="code" scope="page" value="LEVEL"/>
-                    <div class="clearfix">
-                        <label id="set-up-${i18nKey}" 
-                               for="${i18nKey}">
-                            <fmt:message key="${i18nKey}"/>
-                        </label>
-                        <div class="set-up-value input">
-                            <form:select id="${i18nKey}" 
-                                         path="level" 
-                                         cssErrorClass="xlarge error" 
-                                         cssClass="xlarge">
-                                <c:forEach items="${level.selectElementMap}" 
-                                           var="group">
-                                    <c:if test="${group.value[0].enabled}">
-                                    <optgroup label="<fmt:message key="${group.key}-optgroup"/>">
-                                        <c:forEach items="${group.value}" 
-                                                   var="level">
-                                        <c:choose>
-                                            <c:when test="${level.defaultElement == 'true'}">
-                                                <c:set var="selected" 
-                                                       scope="page" 
-                                                       value="selected=\"selected\""/>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <c:set var="selected" 
-                                                       scope="page" 
-                                                       value=""/>
-                                            </c:otherwise>
-                                        </c:choose>
-                                        <option value="${level.value}" ${selected}>
-                                            <fmt:message key="${level.i18nKey}"/> 
-                                            (<fmt:message key="${group.key}-optgroup"/>)
-                                        </option>
-                                        </c:forEach><!-- for each element of a referentiel -->
-                                    </optgroup>
-                                    </c:if>
-                                </c:forEach>
-                            </form:select>
-                            <form:errors path="level" cssClass="alert-message error" /><br/>
-                        </div>
-                    </div>
-                </fieldset>    
-                </c:forEach>
                 <c:forEach var="entry" items="${parametersMap}">
                 <fieldset>
                     <legend><fmt:message key="${entry.key}"/></legend>

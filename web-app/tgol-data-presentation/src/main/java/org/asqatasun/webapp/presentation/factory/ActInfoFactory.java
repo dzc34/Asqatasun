@@ -145,6 +145,7 @@ public final class ActInfoFactory {
 
             }
             setActInfoReferential(actInfo, audit);
+            setActInfoLevel(actInfo, audit);
         }
 
         return actInfo;
@@ -172,6 +173,15 @@ public final class ActInfoFactory {
      */
     private void setActInfoReferential(ActInfo actInfo, Audit audit) {
         actInfo.setReferential(parameterDataService.getReferentialKeyFromAudit(audit));
+    }
+
+    /**
+     * Set the Level to the ActInfo interrogating the parameterDataService
+     * @param actInfo
+     * @param audit
+     */
+    private void setActInfoLevel(ActInfo actInfo, Audit audit) {
+        actInfo.setLevel(parameterDataService.getLevelKeyFromAudit(audit));
     }
 
 }

@@ -191,5 +191,16 @@ public class ActInfoImpl implements ActInfo{
     public void setReferential(String referential) {
         this.referential = referential;
     }
+
+    private String level;
+    @Override
+    public String getLevel() {
+        return level;
+    }
+
+    @Override
+    public void setLevel(String level) {
+        this.level = level;
+    }
     
 }

@@ -123,7 +123,7 @@ public interface ActInfo {
 
     /**
      *
-     * @return
+     * @return String
      *
      * the referential of the current act
      */
@@ -134,6 +134,21 @@ public interface ActInfo {
      * @param referential
      */
     void setReferential(String referential);
+
+    /**
+     *
+     * @return String
+     *
+     * the level of the current act
+     */
+    String getLevel();
+
+    /**
+     *
+     * @param level
+     */
+    void setLevel(String level);
+
 
     /**
      * @return the boolean of manual
