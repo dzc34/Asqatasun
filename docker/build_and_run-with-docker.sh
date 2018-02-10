@@ -144,19 +144,6 @@ if [[ -z "$SOURCE_DIR" || -z "$DOCKER_DIR" || "$HELP" == "true" ]]; then
     usage
 fi
 
-#############################################
-# Functions
-#############################################
-
-fail() {
-    ERROR_MSG=$*
-    echo ""
-    echo " ${RED}-----------------------------------------------------------${NORM}"
-    echo " ${BOLD}FAILURE${NORM}: loading ${APP_NAME} is not possible."
-    echo " ${RED}${ERROR_MSG}${NORM}"
-    echo " ${RED}-----------------------------------------------------------${NORM}"
-    exit -1
-}
 
 
 #############################################
@@ -183,10 +170,35 @@ if ${USE_SUDO_DOCKER} ; then   SUDO='sudo '; fi
 # Functions
 #############################################
 
+fail() {
+    ERROR_MSG=$*
+    echo ""
+    echo " ${RED}-----------------------------------------------------------${NORM}"
+    echo " ${BOLD}FAILURE${NORM}: loading ${APP_NAME} is not possible."
+    echo " ${RED}${ERROR_MSG}${NORM}"
+    echo " ${RED}-----------------------------------------------------------${NORM}"
+    exit -1
+}
+
 # display a step message
 function display_step_msg() {
     echo " -------------------------------------------------------"
     echo " ${1}"
+}
+
+# ask the user to confirm (Y|y|yes|[enter]
+function user_confirmation() {
+    RUN_TESTS=false
+    if ${YES} ;  then
+        RUN_TESTS=true
+    else
+        read -r -p " Are you sure? ... [Y/n] " REPLY
+        REPLY=${REPLY,,} # tolower
+        if [[ $REPLY =~ ^(yes|y| ) ]] || [[ -z $REPLY ]]; then
+            RUN_TESTS=true
+        fi
+    fi
+    echo    # (optional) move to a new line
 }
 
 # Check URL (return HTTP code)
@@ -200,7 +212,7 @@ function check_URL() {
 
 # Remove the previous container (stop + rm)
 function kill_previous_container() {
-    display_step_msg "Remove the previous ${BOLD}${GREEN}Docker${NORM} container"
+    display_step_msg "Stop and remove the previous ${BOLD}${GREEN}Docker${NORM} container"
     set +e
     local RUNNING=$(${SUDO} docker inspect --format="{{ .State.Status }}" ${CONTAINER_NAME} 2>/dev/null)
     set -e
@@ -325,7 +337,9 @@ function do_maven_log_processing() {
         LOG_DIR_SRC="${LOG_DIR_SRC}";
         LOG_DIR="${LOG_DIR_SRC}/target";
         mkdir -p "${LOG_DIR}"
-        mv    "${LOG_DIR_SRC}/log_maven.log" "${LOG_DIR}/"
+        if [ -f "${LOG_DIR_SRC}/log_maven.log" ];then
+            mv  "${LOG_DIR_SRC}/log_maven.log" "${LOG_DIR}/"
+        fi
         echo " -------------------------------------------------------"
         cat "${LOG_DIR}/log_maven.log" | grep "<<< FAILURE! -" | tee "${LOG_DIR}/log_maven-FAIL.log" ;
         cat "${LOG_DIR}/log_maven.log" | grep "WARN"               > "${LOG_DIR}/log_maven-WARM.log" ;
@@ -352,23 +366,6 @@ function check_firefox_binary() {
     # @@@TODO check firefox version
     # /opt/firefox/firefox --version
 }
-
-
-function user_confirmation() {
-    RUN_TESTS=false
-    if ${YES} ;  then
-        RUN_TESTS=true
-    else
-        read -r -p " Are you sure? ... [Y/n] " REPLY
-        REPLY=${REPLY,,} # tolower
-        if [[ $REPLY =~ ^(yes|y| ) ]] || [[ -z $REPLY ]]; then
-            RUN_TESTS=true
-        fi
-    fi
-    echo    # (optional) move to a new line
-}
-
-
 
 # functional testing
 function do_functional_testing() {
@@ -405,6 +402,22 @@ function do_krash_test_campaign() {
     fi
 }
 
+# view build summary
+function view_build_summary () {
+    if   ${LOG_BUILD}; then
+        do_maven_log_processing;
+    fi
+    echo " -------------------------------------------------------"
+    echo " Container ... ${CONTAINER_NAME}"
+    echo " Dockerfile .. ${DOCKER_DIR}"
+    echo " Image ....... ${IMAGE_NAME}:${TAG_NAME}"
+    echo " CMD ......... ${DOCKER_RUN}"
+    echo " -------------------------------------------------------"
+    echo " Shell ....... ${SUDO}docker exec -ti ${CONTAINER_NAME} /bin/bash"
+    echo " Log ......... ${SUDO}docker logs -f  ${CONTAINER_NAME}"
+    echo " URL ......... ${BOLD}${GREEN}${URL_APP}${NORM}"
+}
+
 
 #############################################
 # Do the actual job
@@ -414,17 +427,8 @@ if ! ${SKIP_BUILD} ;        then  do_build;                 fi
 if ! ${SKIP_COPY} ;         then  do_copy_targz;            fi
 if ! ${SKIP_DOCKER_BUILD} ; then  do_docker_build;          fi
 if ! ${SKIP_DOCKER_RUN} ;   then  do_docker_run;            fi
-if   ${LOG_BUILD};          then  do_maven_log_processing;  fi
+                                  view_build_summary
 if   ${FTESTS} ;            then  do_functional_testing;    fi
 if   ${KTESTS} ;            then  do_krash_test_campaign;   fi
 
-echo " -------------------------------------------------------"
-echo " Container ... ${CONTAINER_NAME}"
-echo " Dockerfile .. ${DOCKER_DIR}"
-echo " Image ....... ${IMAGE_NAME}:${TAG_NAME}"
-echo " CMD ......... ${DOCKER_RUN}"
-echo " -------------------------------------------------------"
-echo " Shell ....... ${SUDO}docker exec -ti ${CONTAINER_NAME} /bin/bash"
-echo " Log ......... ${SUDO}docker logs -f  ${CONTAINER_NAME}"
-echo " URL ......... ${BOLD}${GREEN}${URL_APP}${NORM}"
 
