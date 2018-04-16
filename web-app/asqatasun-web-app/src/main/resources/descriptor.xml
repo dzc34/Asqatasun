@@ -54,6 +54,16 @@
             <fileMode>664</fileMode>
             <outputDirectory>/install/engine/sql</outputDirectory>
         </fileSet>
+        <fileSet> <!-- PostgreSQL -->
+            <directory>${basedir}/../../engine/asqatasun-resources/src/main/resources/sql</directory>
+            <includes>
+                <include>*.psql</include>
+            </includes>
+            <fileMode>664</fileMode>
+            <outputDirectory>/install/engine/sql/PostgreSQL</outputDirectory>
+        </fileSet>
+
+
         <!-- SQL Rules resources -->
         <fileSet>
             <directory>${basedir}/../../rules/rules-resources/src/main/resources/sql</directory>
@@ -63,6 +73,16 @@
             <fileMode>664</fileMode>
             <outputDirectory>/install/rules/sql</outputDirectory>
         </fileSet>
+        <fileSet> <!-- PostgreSQL -->
+            <directory>${basedir}/../../rules/rules-resources/src/main/resources/sql</directory>
+            <includes>
+                <include>*.psql</include>
+            </includes>
+            <fileMode>664</fileMode>
+            <outputDirectory>/install/rules/sql/PostgreSQL</outputDirectory>
+        </fileSet>
+
+
         <!-- SQL Rules AccessiWeb 2.2 -->
         <fileSet>
             <directory>${basedir}/../../rules/rules-accessiweb2.2/src/main/resources/sql</directory>
@@ -72,6 +92,16 @@
             <fileMode>664</fileMode>
             <outputDirectory>/install/rules/sql</outputDirectory>
         </fileSet>
+        <fileSet> <!-- PostgreSQL -->
+            <directory>${basedir}/../../rules/rules-accessiweb2.2/src/main/resources/sql</directory>
+            <includes>
+                <include>*.psql</include>
+            </includes>
+            <fileMode>664</fileMode>
+            <outputDirectory>/install/rules/sql/PostgreSQL</outputDirectory>
+        </fileSet>
+
+
         <!-- SQL Rules RGAA 3.0 -->
         <fileSet>
             <directory>${basedir}/../../rules/rules-rgaa3.0/src/main/resources/sql</directory>
@@ -81,6 +111,16 @@
             <fileMode>664</fileMode>
             <outputDirectory>/install/rules/sql</outputDirectory>
         </fileSet>
+        <fileSet> <!-- PostgreSQL -->
+            <directory>${basedir}/../../rules/rules-rgaa3.0/src/main/resources/sql</directory>
+            <includes>
+                <include>*.psql</include>
+            </includes>
+            <fileMode>664</fileMode>
+            <outputDirectory>/install/rules/sql/PostgreSQL</outputDirectory>
+        </fileSet>
+
+
         <!-- SQL Rules RGAA 3.2016 -->
         <fileSet>
             <directory>${basedir}/../../rules/rules-rgaa3.2016/src/main/resources/sql</directory>
@@ -90,6 +130,16 @@
             <fileMode>664</fileMode>
             <outputDirectory>/install/rules/sql</outputDirectory>
         </fileSet>
+        <fileSet> <!-- PostgreSQL -->
+            <directory>${basedir}/../../rules/rules-rgaa3.2016/src/main/resources/sql</directory>
+            <includes>
+                <include>*.psql</include>
+            </includes>
+            <fileMode>664</fileMode>
+            <outputDirectory>/install/rules/sql/PostgreSQL</outputDirectory>
+        </fileSet>
+
+
         <!-- SQL Rules RGAA 3.2017 -->
         <fileSet>
             <directory>${basedir}/../../rules/rules-rgaa3.2017/src/main/resources/sql</directory>
@@ -99,6 +149,16 @@
             <fileMode>664</fileMode>
             <outputDirectory>/install/rules/sql</outputDirectory>
         </fileSet>
+        <fileSet> <!-- PostgreSQL -->
+            <directory>${basedir}/../../rules/rules-rgaa3.2017/src/main/resources/sql</directory>
+            <includes>
+                <include>*.psql</include>
+            </includes>
+            <fileMode>664</fileMode>
+            <outputDirectory>/install/rules/sql/PostgreSQL</outputDirectory>
+        </fileSet>
+
+
         <!-- SQL Rules SEO 1.0 -->
         <fileSet>
             <directory>${basedir}/../../rules/rules-seo1.0/src/main/resources/sql</directory>
@@ -108,6 +168,16 @@
             <fileMode>664</fileMode>
             <outputDirectory>/install/rules/sql</outputDirectory>
         </fileSet>
+        <fileSet> <!-- PostgreSQL -->
+            <directory>${basedir}/../../rules/rules-seo1.0/src/main/resources/sql</directory>
+            <includes>
+                <include>*.psql</include>
+            </includes>
+            <fileMode>664</fileMode>
+            <outputDirectory>/install/rules/sql/PostgreSQL</outputDirectory>
+        </fileSet>
+
+
         <!-- SQL web-app -->
         <fileSet>
             <directory>${basedir}/../tgol-resources/src/main/resources/sql</directory>
@@ -117,6 +187,14 @@
             </includes>
             <fileMode>664</fileMode>
             <outputDirectory>/install/web-app/sql</outputDirectory>
+        </fileSet>
+        <fileSet> <!-- PostgreSQL -->
+            <directory>${basedir}/../tgol-resources/src/main/resources/sql</directory>
+            <includes>
+                <include>*.psql</include>
+            </includes>
+            <fileMode>664</fileMode>
+            <outputDirectory>/install/web-app/sql/PostgreSQL</outputDirectory>
         </fileSet>
 
         <!-- Install files -->
