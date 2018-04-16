@@ -187,7 +187,7 @@ public class UserManagementController extends AbstractUserAndContractsController
         }
         boolean updateAllData = true;
         if (getCurrentUser().getId().equals(userId)) {
-            updateAllData = false;
+           // updateAllData = false;
         }
         return submitUpdateUserForm(
                 createUserCommand,
